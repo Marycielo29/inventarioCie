@@ -11,7 +11,7 @@ class AdminModel
         $this->conexion = $this->conexion->connect();
     }
 
-
+//
     public function generar_llave($cantidad)
     {
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/}{[]@#$%&*()';
