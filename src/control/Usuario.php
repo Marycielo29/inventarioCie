@@ -206,88 +206,111 @@ try {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Correo Empresarial</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #e9ecef;
+      font-family: Tahoma, Geneva, Verdana, sans-serif;
+      color: #343a40;
     }
-    .container {
+    .email-container {
       max-width: 600px;
-      margin: auto;
+      margin: 40px auto;
       background-color: #ffffff;
-      font-family: Arial, sans-serif;
-      color: #333333;
-      border: 1px solid #dddddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.98);
     }
-    .header {
-      background-color:#ffb833;
-      color: white;
+    .email-header {
+      background-color:rgb(207, 219, 230);
+      color: #ffffff;
       padding: 20px;
       text-align: center;
     }
-    .content {
+    .email-header img {
+      max-width: 100px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+    .email-header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .email-body {
       padding: 30px;
     }
-    .content h1 {
-      font-size: 22px;
+    .email-body h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    .email-body p {
+      font-size: 16px;
+      line-height: 1.6;
       margin-bottom: 20px;
     }
-    .content p {
-      font-size: 16px;
-      line-height: 1.5;
-    }
-    .button {
+    .email-button {
       display: inline-block;
-      background-color:#ffb833;
+      background-color:rgb(71, 142, 216);
       color: #ffffff !important;
-      padding: 12px 25px;
-      margin: 20px 0;
+      padding: 12px 24px;
       text-decoration: none;
       border-radius: 4px;
+      font-weight: bold;
     }
-    .footer {
-      background-color: #eeeeee;
+    .email-footer {
+      background-color:rgb(207, 219, 230);
       text-align: center;
       padding: 15px;
       font-size: 12px;
-      color: #666666;
+      color: #6c757d;
     }
-    @media screen and (max-width: 600px) {
-      .content, .header, .footer {
-        padding: 15px !important;
-      }
-      .button {
-        padding: 10px 20px !important;
+    .email-footer a {
+      color: #6c757d;
+      text-decoration: none;
+    }
+    .email-footer a:hover {
+      text-decoration: underline;
+    }
+    .social-icons img {
+      width: 24px;
+      height: 24px;
+    }
+    @media only screen and (max-width: 600px) {
+      .email-body {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h2>Nombre de tu empresa</h2>
+  <div class="email-container">
+    <div class="email-header">
+      <img src="https://png.pngtree.com/png-clipart/20230913/original/pngtree-silhouette-heels-png-image_11062488.png" alt="Logo de la empresa">
+      <h1>Altura Chic</h1>
     </div>
-    <div class="content">
-      <h1>Hola [Nombre del cliente],</h1>
+    <div class="email-body">
+      <h2>Estimado/a [Pameluquis],</h2>
       <p>
-        Te saludamos cordialmente. Queremos informarte sobre nuestras últimas novedades y promociones exclusivas para ti.
+        Nos complace compartir contigo las últimas actualizaciones y beneficios exclusivos que hemos preparado para ti.
       </p>
       <p>
-        ¡No te pierdas nuestras ofertas especiales por tiempo limitado!
+        Aprovecha nuestras promociones especiales disponibles por tiempo limitado.
       </p>
-      <a href="https://www.tusitio.com/promocion" class="button">Ver más</a>
-      <p>Gracias por confiar en nosotros.</p>
+      <p style="text-align: center;">
+        <a href="https://www.tusitio.com/promocion" class="email-button">Descubrir más</a>
+      </p>
+      <p>¡Gracias por ser parte de nuestra comunidad!</p>
     </div>
-    <div class="footer">
-      © 2025 Nombre de tu empresa. Todos los derechos reservados.<br>
-      <a href="https://www.tusitio.com/desuscribirse">Cancelar suscripción</a>
+    <div class="email-footer">
+      © 2025 Altura Chic. Todos los derechos reservados.<br>
     </div>
   </div>
 </body>
-</html>';
+</html>
+';
 
     $mail->send();
     echo 'Message has been sent';
