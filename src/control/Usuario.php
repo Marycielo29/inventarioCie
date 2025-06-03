@@ -15,8 +15,6 @@ require '../../vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require '../../vendor/phpmailer/phpmailer/src/SMTP.php';
 $tipo = $_GET['tipo'];
 
-
-
 //instanciar la clase categoria model
 $objSesion = new SessionModel();
 $objUsuario = new UsuarioModel();
@@ -25,6 +23,17 @@ $objAdmin = new AdminModel();
 //variables de sesion
 $id_sesion = $_POST['sesion'];
 $token = $_POST['token'];
+
+if ($tipo == "validar_datos_reset_password") {
+  $id_email = $_POST['id'];
+  $token_email = $_POST['token'];
+  $arr_Respuesta = array('status' => false, 'msg' => 'link caducado');
+  $datos_usuario = $objUsuario->buscarUsuarioById($id_email);
+  if ($datos_usuario->reset_password==1 && password_verify($datos_usuario->token_password, $token_email)) {
+    $arr_Respuesta = array('status' => true, 'msg' => 'oki doki');
+  }
+  echo json_encode($arr_Respuesta);
+}
 
 if ($tipo == "listar_usuarios_ordenados_tabla") {
     $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
@@ -161,6 +170,7 @@ if ($tipo == "sent_email_password") {
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
        $datos_sesion = $objSesion->buscarSesionLoginById($id_sesion);
        $datos_usuario = $objUsuario->buscarUsuarioById($datos_sesion->id_usuario);
+       $nombreusuario = $datos_usuario->nombres_apellidos;
        $llave = $objAdmin->generar_llave(30);
        $token = password_hash($llave, PASSWORD_DEFAULT);
        $update = $objUsuario->updateResetPassword($datos_sesion->id_usuario, $llave, 1);
@@ -292,15 +302,15 @@ try {
       <h1>Altura Chic</h1>
     </div>
     <div class="email-body">
-      <h2>Estimado/a [Pameluquis],</h2>
+      <h2>Estimado/a '.$nombreusuario.',</h2>
       <p>
-        Nos complace compartir contigo las últimas actualizaciones y beneficios exclusivos que hemos preparado para ti.
+       Nos complace informarle que solicito su cambio de contraseña.
       </p>
       <p>
         Aprovecha nuestras promociones especiales disponibles por tiempo limitado.
       </p>
       <p style="text-align: center;">
-        <a href="https://www.tusitio.com/promocion" class="email-button">Descubrir más</a>
+        <a href="'.BASE_URL.'reset-password?data='.$datos_usuario->id.'&data2='.$token.'" class="email-button">Cambiar contraseña</a>
       </p>
       <p>¡Gracias por ser parte de nuestra comunidad!</p>
     </div>

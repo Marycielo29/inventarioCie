@@ -90,7 +90,7 @@
     <div class="email-body">
       <h2>Estimado/a [Pameluquis],</h2>
       <p>
-        Nos complace compartir contigo las últimas actualizaciones y beneficios exclusivos que hemos preparado para ti.
+        Nos complace informarle que solicito su cambio de contraseña.
       </p>
       <p>
         Aprovecha nuestras promociones especiales disponibles por tiempo limitado.
