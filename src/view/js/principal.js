@@ -169,26 +169,132 @@ function cargar_sede_filtro(sedes) {
 
 // ------------------------------------------- FIN DE DATOS DE CARGA PARA FILTRO DE BUSQUEDA -----------------------------------------------
 
-async function validar_datos_reset_password(){
+async function validar_datos_reset_password() {
     let id = document.getElementById('data').value;
-    let token= document.getElementById('data2').value;
+    let token = document.getElementById('data2').value;
 
     const formData = new FormData();
     formData.append('id', id);
     formData.append('token', token);
+    formData.append('sesion', '');
 
-try {
-    let respuesta = await fetch(base_url_server + 'src/control/usuario.php?tipo=validar_datos_reset_password', {
+    try {
+        let respuesta = await fetch(base_url_server + 'src/control/usuario.php?tipo=validar_datos_reset_password', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
             body: formData
         });
         let json = await respuesta.json();
-        if (json.status) {
+        if (json.status == false) {
+            Swal.fire({
+                type: 'error',
+                title: 'Error de link',
+                text: "link caducado, verifique su correo",
+                confirmButtonClass: 'btn btn-confirm mt-2',
+                footer: '',
+                timer: 1000
+            });
+            let formulario = document.getElementById('frm_reset_password');
+            formulario.innerHTML= `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Contraseña caducada</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg,rgb(66, 47, 211),rgb(158, 97, 255));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 18px;
+      color: #222;
+      max-width: 400px;
+      margin-bottom: 30px;
+    }
+
+    a {
+      text-decoration: none;
+      background: linear-gradient(90deg,rgb(66, 47, 211),rgb(158, 97, 255));
+      color: white;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Contraseña caducada</h2>
+  <p>El enlace para recuperar tu contraseña ha expirado o ya fue utilizado.</p>
+  <a href="/login">Ir al inicio de sesión</a>
+
+</body>
+</html>
+`;
+           // location.replace(base_url + "login");
         }
         //console.log(respuesta);
-} catch (e) {
-    console.log("Error al cargar instituciones" + e);
+    } catch (e) {
+        console.log("Error al cargar instituciones" + e);
+    }
 }
+
+function validar_imputs_password(){
+    let pass1 = document.getElementById('password').value; //capturar los campos
+    let pass2 = document.getElementById('password1').value;
+    // verificacion
+        if (pass1 !== pass2) {
+            Swal.fire({
+                type: 'error',
+                title: 'Error',
+                text: "No coincide tu contraseña!!!!!",
+                footer: '',
+                timer: 1500
+            });
+            return;
+        }
+        if (pass1.length<8 && pass2<8) {
+             Swal.fire({
+                type: 'error',
+                title: 'Error',
+                text: "La contraseña tiene que ser minimo de 8 caracteres",
+                footer: '',
+                timer: 1500
+            });
+            return;
+        } else {
+            actualizar_password();
+        }
+        
+}
+
+async function actualizar_password() {
+    
 }

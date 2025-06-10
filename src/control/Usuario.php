@@ -310,7 +310,7 @@ try {
         Aprovecha nuestras promociones especiales disponibles por tiempo limitado.
       </p>
       <p style="text-align: center;">
-        <a href="'.BASE_URL.'reset-password?data='.$datos_usuario->id.'&data2='.$token.'" class="email-button">Cambiar contraseña</a>
+        <a href="'.BASE_URL.'reset-password/?data='.$datos_usuario->id.'&data2='.urlencode($token).'" class="email-button">Cambiar contraseña</a>
       </p>
       <p>¡Gracias por ser parte de nuestra comunidad!</p>
     </div>

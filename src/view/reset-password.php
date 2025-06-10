@@ -13,7 +13,7 @@
       align-items: center;
       min-height: 100vh;
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg,rgb(69, 195, 226),rgb(136, 171, 211));
+      background: linear-gradient(135deg,rgb(69, 195, 226),rgb(23, 83, 153));
       color: #fff;
     }
 
@@ -57,7 +57,7 @@
       width: 100%;
       padding: 10px;
       margin-top: 20px;
-      background: #6e45e2;
+      background: #74ebd5;
       border: none;
       border-radius: 5px;
       color: #fff;
@@ -67,7 +67,7 @@
     }
 
     .login-container button:hover {
-      background:rgb(136, 190, 211);
+      background: #ACB6E5;
     }
 
     .login-container a {
@@ -92,21 +92,23 @@
 
 <body>
     <input type="hidden" id="data" value="<?php echo $_GET['data']; ?>">
-    <input type="hidden" id="data2" value="<?php echo $_GET['data2']; ?>">
+    <input type="hidden" id="data2" value="<?php echo urldecode($_GET['data2']); ?>">
 
   <div class="login-container">
     <h1>Recuperar contraseña</h1>
     <img src="https://png.pngtree.com/png-clipart/20230913/original/pngtree-silhouette-heels-png-image_11062488.png" alt="" width="100%">
-    <h4>Sistema de Control de Inventario</h4>
+    <h4>Altura Chic <3 </h4>
     <form id="frm_reset_password">
       <input type="text" name="password" id="password" placeholder="Nueva contraseña" required>
-      <input type="text" name="password" id="password" placeholder="Confirmar contraseña" required>
-      <button type="submit">Actualizar contraseña</button>
+      <input type="text" name="password1" id="password1" placeholder="Confirmar contraseña" required>
+      <button type="button" onclick="validar_imputs_password()">Actualizar Contraseña</button>
     </form>
-    <a href="#">¿Olvidaste tu contraseña?</a>
   </div>
 </body>
 <script src="<?php echo BASE_URL; ?>src/view/js/principal.js"></script>
+<script>
+validar_datos_reset_password();
+</script>
 <!-- Sweet Alerts Js-->
 <script src="<?php echo BASE_URL ?>src/view/pp/plugins/sweetalert2/sweetalert2.min.js"></script>
 
