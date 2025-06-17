@@ -97,7 +97,7 @@
   <div class="login-container">
     <h1>Recuperar contraseña</h1>
     <img src="https://png.pngtree.com/png-clipart/20230913/original/pngtree-silhouette-heels-png-image_11062488.png" alt="" width="100%">
-    <h4>Altura Chic <3 </h4>
+    <h4>Altura Chic </h4>
     <form id="frm_reset_password">
       <input type="text" name="password" id="password" placeholder="Nueva contraseña" required>
       <input type="text" name="password1" id="password1" placeholder="Confirmar contraseña" required>

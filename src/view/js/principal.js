@@ -298,12 +298,13 @@ function validar_imputs_password(){
 async function actualizar_password() {
     const id = document.getElementById('data').value;
     const token = document.getElementById('data2').value;
-    const password = passwordInput.value;
+    //const password = document.getElementById('data2').value;
+    const nueva_password = document.getElementById('password').value;
     
     const formData = new FormData();
     formData.append('id', id);
     formData.append('token', token);
-    formData.append('password', password);
+    formData.append('password', nueva_password);
     formData.append('sesion', '');
     
     try {
