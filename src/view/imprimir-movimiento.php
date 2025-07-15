@@ -93,6 +93,32 @@ $curl = curl_init(); //inicia la sesión cURL
       text-align: right;
       margin-top: 30px;
     }
+.firma-container {
+    display: flex;
+    justify-content: space-around; /* Espacio entre las firmas */
+    margin-top: 30px; /* Espaciado opcional arriba */
+  }
+
+  .firma {
+    text-align: center;
+    width: 45%; /* Ajusta según tu necesidad */
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 9pt;
+  }
+  th, td {
+    border: 1px solid #000;
+    padding: 4px;
+    text-align: center;
+  }
+  thead th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
   </style>
 </head>
 <body>
@@ -164,47 +190,111 @@ $contenido_pdf .= '
   </table>
 
   <div class="firma-container">
-    <div class="firma">
-      <p>------------------------------</p>
-      <p>ENTREGUÉ CONFORME</p>
-    </div>
-    <div class="firma">
-      <p>------------------------------</p>
-      <p>RECIBÍ CONFORME</p>
-    </div>
+  <div class="firma">
+    <p>------------------------------</p> 
+    <p>ENTREGUÉ CONFORME</p>
   </div>
+  <div class="firma">
+    <p>------------------------------</p>
+    <p>RECIBÍ CONFORME</p>
+  </div>
+</div>
 
 </body>
 </html>
 ';
 
 
-    require_once('./vendor/tecnickcom/tcpdf/tcpdf.php');
+   
+require_once('./vendor/tecnickcom/tcpdf/tcpdf.php');
 
-    $pdf = new TCPDF();
+// 8. CREAR CLASE PERSONALIZADA PARA ENCABEZADO Y PIE DE PÁGINA
+class MYPDF extends TCPDF {
+    public function Header() {
+        // URL de las imágenes
+        $logo_left  = 'https://iestphuanta.edu.pe/wp-content/uploads/2021/12/logo_tecno-1-2.png';
+        $logo_right = 'https://dreayacucho.gob.pe/storage/directory/lCcjIpyYl7E5tQjWegZVLZvp1ZIMbY-metaWk9PRUEybXNRUGlYWWtKRng0SkxqcG9SRW5jTEZuLW1ldGFiRzluYnk1d2JtYz0tLndlYnA=-.webp';
 
-    // set document information
+        // Logo izquierdo
+        $this->Image($logo_left, 15, 10, 25);  
+        // Logo derecho
+        $this->Image($logo_right, 170, 10, 25); 
+
+        // Título principal 
+        $this->SetXY(55, 12); // desplazado al centro 
+        $this->SetFont('helvetica', 'B', 11);
+        $this->SetTextColor(0, 70, 140); // Azul fuerte
+        $this->Cell(100, 6, 'INSTITUTO DE EDUCACIÓN SUPERIOR TECNOLÓGICO PÚBLICO', 0, 1, 'C');
+
+        // Subtítulo
+        $this->SetX(55);
+        $this->SetFont('helvetica', 'B', 11);
+        $this->SetTextColor(0, 70, 140); // Gris oscuro
+        $this->Cell(100, 6, '"HUANTA"', 0, 1, 'C');
+
+         // contenido
+        $this->SetX(55, 12);
+        $this->SetFont('helvetica', 'I', 10);
+        $this->SetTextColor(85, 85, 85); // Gris oscuro
+        $this->Cell(100, 6, 'Sistema de Control Patrimonial', 0, 1, 'C');
+
+        // Línea decorativa azul
+        $this->SetDrawColor(52, 152, 219);
+        $this->SetLineWidth(0.8);
+        $this->Line(15, 44, 195, 44);
+
+        $this->Ln(5); // Espacio adicional
+    }
+
+  public function Footer() {
+    // Posicionar a 15 mm del final de la página
+    $this->SetY(-15);
+
+    // Línea superior del footer
+    $this->SetDrawColor(189, 195, 199);
+    $this->SetLineWidth(0.5);
+    $this->Line(15, $this->GetY() - 5, 195, $this->GetY() - 5);
+
+    // Estilo del texto
+    $this->SetFont('helvetica', 'I', 8);
+    $this->SetTextColor(100, 100, 100);
+
+    // Texto de número de página centrado
+    $this->Cell(0, 10, 'Página ' . $this->getAliasNumPage() . ' de ' . $this->getAliasNbPages(), 0, 0, 'C');
+
+    // Reset de estilo
+    $this->SetTextColor(0, 0, 0);
+    $this->SetLineWidth(0.2);
+
+    }
+}
+
+
+$pdf = new MYPDF();
+// set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Marycielo');
 $pdf->SetTitle('Reporte de movimiento');
 
-//asignar los margenes
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+// 10. CONFIGURAR MÁRGENES Y PÁGINA
+$pdf->SetMargins(PDF_MARGIN_LEFT, 45, PDF_MARGIN_RIGHT); 
+$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);                
+$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
 
-// asignar salto de pagina automatico
+// Configurar salto de página automático
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
-// asignar tipo de letra y tamaño
-$pdf->SetFont('timesB', '', 7);
+// Configurar fuente por defecto
+$pdf->SetFont('helvetica', '', 8);
 
-// añadir pagina
+// Agregar nueva página
 $pdf->AddPage();
 
-// output the HTML content
-$pdf->writeHTML($contenido_pdf);
+// 11. INSERTAR CONTENIDO HTML EN EL PDF
+// Convertir HTML a PDF y renderizarlo
+$pdf->writeHTML($contenido_pdf, true, false, true, false, '');
 
-//Close and output PDF document
-ob_clean();
-$pdf->Output('sd', 'I');
-        
+// 12. GENERAR Y MOSTRAR EL PDF
+// Generar archivo PDF con nombre único (incluye fecha y hora)
+$pdf->Output('reporte_movimiento_' . date('Ymd_His') . '.pdf', 'I');
     }
