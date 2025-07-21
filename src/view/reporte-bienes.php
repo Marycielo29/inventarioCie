@@ -39,7 +39,7 @@ $curl = curl_init(); //inicia la sesión cURL
 
        // Crear el Excel
             $spreadsheet = new Spreadsheet();
-            $spreadsheet->getProperties()->setCreator("JUAN")->setLastModifiedBy("yo")->setTitle("ReporteBienes")->setDescription("yo");
+            $spreadsheet->getProperties()->setCreator("MARYCIELO")->setLastModifiedBy("yo")->setTitle("ReporteBienes")->setDescription("yo");
             $activeWorkSheet = $spreadsheet->getActiveSheet();
             $activeWorkSheet->setTitle("Bienes");  
 
