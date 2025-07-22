@@ -227,7 +227,7 @@ if ($tipo == "datos_registro") {
     }
     echo json_encode($arr_Respuesta);
 }
-
+// listar todos los bienes
 if ($tipo == "listarBienes") {
         $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)){
@@ -238,3 +238,4 @@ if ($tipo == "listarBienes") {
     } 
     echo json_encode($arr_Respuesta);
 }
+

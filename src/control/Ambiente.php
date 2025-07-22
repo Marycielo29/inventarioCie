@@ -68,7 +68,8 @@ if ($tipo == "listar_ambientes_ordenados_tabla") {
                 $arr_contenido[$i]->codigo = $arr_Ambiente[$i]->codigo;
                 $arr_contenido[$i]->detalle = $arr_Ambiente[$i]->detalle;
                 $arr_contenido[$i]->otros_detalle = $arr_Ambiente[$i]->otros_detalle;
-                $opciones = '<button type="button" title="Editar" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".modal_editar' . $arr_Ambiente[$i]->id . '"><i class="fa fa-edit"></i></button>';
+                $opciones = '<button type="button" title="Editar" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".modal_editar' . $arr_Ambiente[$i]->id . '"><i class="fa fa-edit"></i></button>
+                ';
                 $arr_contenido[$i]->options = $opciones;
             }
             $arr_Respuesta['total'] = count($busqueda_filtro);
