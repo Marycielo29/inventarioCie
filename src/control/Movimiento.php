@@ -234,3 +234,35 @@ if ($tipo == "buscar_movimiento_id") {
     }
     echo json_encode($arr_Respuesta);
 }
+
+if($tipo == "ListarMovimientos"){
+    $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+
+        $arr_movimiento = $objMovimiento->listarMovimientos();
+        $arr_contenido = [];
+        if (!empty($arr_movimiento)) {
+            // recorremos el array para agregar las opciones de las categorias
+            for ($i = 0; $i < count($arr_movimiento); $i++) {
+                $origen = $objAmbiente->buscarAmbienteById($arr_movimiento[$i]->id_ambiente_origen);
+                $destino = $objAmbiente->buscarAmbienteById($arr_movimiento[$i]->id_ambiente_destino);
+                $usuario = $objUsuario->buscarUsuarioById($arr_movimiento[$i]->id_usuario_registro);
+                $institucion = $objInstitucion->buscarInstitucionById($arr_movimiento[$i]->id_ies);
+                // definimos el elemento como objeto
+                $arr_contenido[$i] = (object) [];
+                // agregamos solo la informacion que se desea enviar a la vista
+                $arr_contenido[$i]->id = $arr_movimiento[$i]->id;
+                $arr_contenido[$i]->origenname = $origen->detalle;
+                $arr_contenido[$i]->destinoname = $destino->detalle;
+                $arr_contenido[$i]->usuarioname = $usuario->nombres_apellidos;
+                $arr_contenido[$i]->fecha = $arr_movimiento[$i]->fecha_registro;
+                $arr_contenido[$i]->descripcion = $arr_movimiento[$i]->descripcion;
+                $arr_contenido[$i]->institucionname = $institucion->nombre;
+            }
+            $arr_Respuesta['status'] = true;
+            $arr_Respuesta['msg']= 'correcto';
+            $arr_Respuesta['movimientos'] = $arr_contenido;
+        }
+    }
+    echo json_encode($arr_Respuesta);
+}
