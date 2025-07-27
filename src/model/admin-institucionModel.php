@@ -78,6 +78,15 @@ class InstitucionModel
         return $arrRespuesta;
     }
 
+//se listara desde la base de datos
+public function listarInstitucion(){
+    $arrRespuesta = array();
+    $sql = $this->conexion->query("SELECT * FROM institucion");
 
+    while ($objeto = $sql->fetch_object()) {
+        array_push($arrRespuesta, $objeto);
+    }
+    return $arrRespuesta;
+    }
 
 }
